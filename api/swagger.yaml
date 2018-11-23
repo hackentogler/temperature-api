@@ -1,0 +1,79 @@
+---
+swagger: "2.0"
+info:
+  description: |
+    Exposes an API for logging temperature readings
+    hackentogler.com
+  version: "1.0.0"
+  title: "Temperature API"
+host: "hackentogler.com"
+basePath: "/temperature/v1"
+schemes:
+- "https"
+produces:
+- "application/json"
+paths:
+  /search:
+    get:
+      summary: "The endpoint to log a temperature reading."
+      operationId: "searchGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "key"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "List the reponse status"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Entry"
+      x-swagger-router-controller: "Default"
+    post:
+      summary: "The endpoint to log a temperature reading."
+      operationId: "searchPOST"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "filter"
+        required: true
+        schema:
+          $ref: "#/definitions/Entry"
+      responses:
+        200:
+          description: "List the response status"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Entry"
+      x-swagger-router-controller: "Default"
+definitions:
+  Entry:
+    type: "object"
+    properties:
+      key:
+        type: "string"
+      anotherKey:
+        type: "string"
+    description: "Key-Value Map"
+    example:
+      anotherKey: "anotherKey"
+      key: "key"
+  APIError:
+    type: "object"
+    properties:
+      systime:
+        type: "string"
+      url:
+        type: "string"
+      uuid:
+        type: "string"
+      errors:
+        type: "array"
+        items:
+          type: "string"
+    description: "API Error Description"
